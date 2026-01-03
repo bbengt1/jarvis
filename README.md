@@ -171,4 +171,3 @@ web/            # FastAPI server + UI
 ## License
 
 MIT
-# jarvis

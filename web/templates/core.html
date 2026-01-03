@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.R.G.U.S. - Power Core</title>
+    <style>
+        :root {
+            --core-color: #00d4ff;
+            --core-glow: #00a8cc;
+            --core-bright: #80eaff;
+            --bg-dark: #0a0a0f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .core-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Outer glow effect */
+        .core-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+            filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .core-glow.active {
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.4) 0%, transparent 70%);
+            transform: scale(1.2);
+        }
+
+        /* Main arc reactor */
+        .arc-reactor {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #12121a, #0a0a0f);
+            box-shadow:
+                0 0 60px rgba(0, 212, 255, 0.3),
+                inset 0 0 60px rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .arc-reactor.active {
+            box-shadow:
+                0 0 100px rgba(0, 212, 255, 0.6),
+                inset 0 0 60px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Outer ring */
+        .outer-ring {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 3px solid var(--core-color);
+            opacity: 0.6;
+            animation: rotate 20s linear infinite;
+        }
+
+        .outer-ring::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: var(--core-bright);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--core-color);
+        }
+
+        /* Middle ring with segments */
+        .middle-ring {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            animation: rotate-reverse 15s linear infinite;
+        }
+
+        .segment {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .segment::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 6px;
+            background: var(--core-color);
+            border-radius: 3px;
+            box-shadow: 0 0 15px var(--core-color);
+            transition: all 0.2s ease;
+        }
+
+        .active .segment::before {
+            background: var(--core-bright);
+            box-shadow: 0 0 25px var(--core-bright);
+        }
+
+        .segment:nth-child(1) { transform: rotate(0deg); }
+        .segment:nth-child(2) { transform: rotate(30deg); }
+        .segment:nth-child(3) { transform: rotate(60deg); }
+        .segment:nth-child(4) { transform: rotate(90deg); }
+        .segment:nth-child(5) { transform: rotate(120deg); }
+        .segment:nth-child(6) { transform: rotate(150deg); }
+        .segment:nth-child(7) { transform: rotate(180deg); }
+        .segment:nth-child(8) { transform: rotate(210deg); }
+        .segment:nth-child(9) { transform: rotate(240deg); }
+        .segment:nth-child(10) { transform: rotate(270deg); }
+        .segment:nth-child(11) { transform: rotate(300deg); }
+        .segment:nth-child(12) { transform: rotate(330deg); }
+
+        /* Inner ring */
+        .inner-ring {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 4px solid var(--core-glow);
+            opacity: 0.8;
+            animation: pulse-ring 2s ease-in-out infinite;
+        }
+
+        .active .inner-ring {
+            animation: pulse-ring-active 0.5s ease-in-out infinite;
+            border-color: var(--core-bright);
+        }
+
+        /* Core center */
+        .core-center {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--core-bright) 0%, var(--core-color) 50%, var(--core-glow) 100%);
+            box-shadow:
+                0 0 40px var(--core-color),
+                0 0 80px var(--core-color),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: pulse-core 2s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .active .core-center {
+            animation: pulse-core-active 0.3s ease-in-out infinite;
+            box-shadow:
+                0 0 60px var(--core-bright),
+                0 0 120px var(--core-color),
+                inset 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Inner core detail */
+        .core-inner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px var(--core-bright);
+        }
+
+        /* Energy arcs */
+        .energy-arc {
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: var(--core-color);
+            opacity: 0;
+            animation: energy-flow 3s linear infinite;
+        }
+
+        .energy-arc:nth-child(1) { animation-delay: 0s; }
+        .energy-arc:nth-child(2) { animation-delay: 1s; }
+        .energy-arc:nth-child(3) { animation-delay: 2s; }
+
+        .active .energy-arc {
+            opacity: 0.8;
+            border-top-color: var(--core-bright);
+            animation: energy-flow-active 1s linear infinite;
+        }
+
+        /* Audio visualizer bars */
+        .visualizer {
+            position: absolute;
+            bottom: -80px;
+            display: flex;
+            gap: 4px;
+            align-items: flex-end;
+            height: 60px;
+        }
+
+        .bar {
+            width: 6px;
+            background: linear-gradient(to top, var(--core-glow), var(--core-bright));
+            border-radius: 3px;
+            transition: height 0.1s ease;
+            box-shadow: 0 0 10px var(--core-color);
+        }
+
+        /* Status text */
+        .status {
+            position: absolute;
+            bottom: -140px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--core-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .status-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .status-sub {
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+
+        /* Title */
+        .title {
+            position: absolute;
+            top: -80px;
+            text-align: center;
+        }
+
+        .title h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            color: var(--core-color);
+            text-shadow: 0 0 20px var(--core-color);
+        }
+
+        .title .subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            opacity: 0.5;
+            margin-top: 5px;
+        }
+
+        /* Navigation */
+        .nav-link {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: var(--core-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes rotate-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        @keyframes pulse-ring-active {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        @keyframes pulse-core {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes pulse-core-active {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        @keyframes energy-flow {
+            0% { transform: rotate(0deg); opacity: 0; }
+            50% { opacity: 0.3; }
+            100% { transform: rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes energy-flow-active {
+            0% { transform: rotate(0deg); opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { transform: rotate(360deg); opacity: 0.5; }
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .core-container {
+                transform: scale(0.7);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="nav-link">Settings</a>
+
+    <div class="core-container">
+        <div class="title">
+            <h1>A.R.G.U.S.</h1>
+            <div class="subtitle">ADVANCED RESPONSE GUIDANCE UTILITY SYSTEM</div>
+        </div>
+
+        <div class="core-glow" id="coreGlow"></div>
+
+        <div class="arc-reactor" id="arcReactor">
+            <div class="outer-ring"></div>
+
+            <div class="energy-arc"></div>
+            <div class="energy-arc"></div>
+            <div class="energy-arc"></div>
+
+            <div class="middle-ring" id="middleRing">
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+                <div class="segment"></div>
+            </div>
+
+            <div class="inner-ring"></div>
+
+            <div class="core-center">
+                <div class="core-inner"></div>
+            </div>
+        </div>
+
+        <div class="visualizer" id="visualizer"></div>
+
+        <div class="status">
+            <div class="status-text" id="statusText">STANDBY</div>
+            <div class="status-sub" id="statusSub">Awaiting voice input</div>
+        </div>
+    </div>
+
+    <script>
+        const arcReactor = document.getElementById('arcReactor');
+        const coreGlow = document.getElementById('coreGlow');
+        const middleRing = document.getElementById('middleRing');
+        const visualizer = document.getElementById('visualizer');
+        const statusText = document.getElementById('statusText');
+        const statusSub = document.getElementById('statusSub');
+
+        // Create visualizer bars
+        const barCount = 20;
+        for (let i = 0; i < barCount; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.style.height = '5px';
+            visualizer.appendChild(bar);
+        }
+        const bars = visualizer.querySelectorAll('.bar');
+
+        // State
+        let isActive = false;
+        let audioContext = null;
+        let analyser = null;
+        let microphone = null;
+        let isListening = false;
+
+        // Status messages
+        const states = {
+            standby: { text: 'STANDBY', sub: 'Awaiting voice input' },
+            listening: { text: 'LISTENING', sub: 'Processing audio...' },
+            speaking: { text: 'SPEAKING', sub: 'Generating response...' },
+            thinking: { text: 'PROCESSING', sub: 'Analyzing request...' }
+        };
+
+        function setActive(active) {
+            isActive = active;
+            if (active) {
+                arcReactor.classList.add('active');
+                coreGlow.classList.add('active');
+                middleRing.classList.add('active');
+            } else {
+                arcReactor.classList.remove('active');
+                coreGlow.classList.remove('active');
+                middleRing.classList.remove('active');
+            }
+        }
+
+        function setState(state) {
+            const s = states[state] || states.standby;
+            statusText.textContent = s.text;
+            statusSub.textContent = s.sub;
+            setActive(state !== 'standby');
+        }
+
+        function updateVisualizer(data) {
+            const step = Math.floor(data.length / barCount);
+            bars.forEach((bar, i) => {
+                const value = data[i * step] || 0;
+                const height = Math.max(5, (value / 255) * 60);
+                bar.style.height = `${height}px`;
+            });
+        }
+
+        // Audio analysis for microphone input
+        async function startAudioAnalysis() {
+            if (isListening) return;
+
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                microphone = audioContext.createMediaStreamSource(stream);
+                microphone.connect(analyser);
+
+                isListening = true;
+                setState('listening');
+
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+                function analyze() {
+                    if (!isListening) return;
+
+                    analyser.getByteFrequencyData(dataArray);
+                    updateVisualizer(dataArray);
+
+                    // Calculate average volume
+                    const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
+
+                    // Activate core based on volume
+                    if (average > 30) {
+                        setActive(true);
+                    } else if (average < 10) {
+                        setActive(false);
+                    }
+
+                    requestAnimationFrame(analyze);
+                }
+
+                analyze();
+            } catch (err) {
+                console.error('Microphone access denied:', err);
+                setState('standby');
+            }
+        }
+
+        function stopAudioAnalysis() {
+            isListening = false;
+            if (microphone) {
+                microphone.disconnect();
+            }
+            if (audioContext) {
+                audioContext.close();
+            }
+            setState('standby');
+            bars.forEach(bar => bar.style.height = '5px');
+        }
+
+        // WebSocket connection for real-time state updates
+        let ws = null;
+        function connectWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(`${protocol}//${window.location.host}/ws/core`);
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.state) {
+                    setState(data.state);
+                }
+                if (data.visualizer) {
+                    updateVisualizer(data.visualizer);
+                }
+            };
+
+            ws.onclose = () => {
+                // Reconnect after 3 seconds
+                setTimeout(connectWebSocket, 3000);
+            };
+
+            ws.onerror = () => {
+                // WebSocket not available, use polling or mic input
+                console.log('WebSocket not available, using local audio');
+            };
+        }
+
+        // Click to toggle microphone
+        arcReactor.addEventListener('click', () => {
+            if (isListening) {
+                stopAudioAnalysis();
+            } else {
+                startAudioAnalysis();
+            }
+        });
+
+        // Try WebSocket first, fall back to instructions
+        connectWebSocket();
+
+        // Simulate activity for demo (remove in production)
+        function simulateActivity() {
+            const states = ['standby', 'listening', 'thinking', 'speaking'];
+            let idx = 0;
+
+            // Random visualizer animation when not using mic
+            setInterval(() => {
+                if (!isListening) {
+                    const fakeData = new Uint8Array(128);
+                    for (let i = 0; i < fakeData.length; i++) {
+                        fakeData[i] = Math.random() * (isActive ? 150 : 30);
+                    }
+                    updateVisualizer(fakeData);
+                }
+            }, 100);
+        }
+
+        simulateActivity();
+
+        // Keyboard shortcut: Space to toggle
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (isListening) {
+                    stopAudioAnalysis();
+                } else {
+                    startAudioAnalysis();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
