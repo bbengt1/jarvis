@@ -1,0 +1,146 @@
+# Sprint Status File
+# This tracks progress through BMM Implementation phase.
+
+# generated: 2026-01-03
+# project: J.A.R.V.I.S.
+# project_key: jarvis
+# tracking_system: file-system
+# story_location: "_bmad-output/implementation-artifacts/stories"
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-01-03
+project: J.A.R.V.I.S.
+project_key: jarvis
+tracking_system: file-system
+story_location: "_bmad-output/implementation-artifacts/stories"
+
+development_status:
+  # ============================================================
+  # PHASE 1 (MVP) - Epics 1-4
+  # ============================================================
+
+  # Epic 1: Memory & Identity
+  # Goal: J.A.R.V.I.S. remembers who you are, your preferences, and your history
+  # FRs: FR1-FR8, FR42-FR46
+  epic-1: backlog
+  1-1-initialize-memory-store: backlog
+  1-2-persist-user-preferences: backlog
+  1-3-record-interaction-history: backlog
+  1-4-recall-relevant-context: backlog
+  1-5-learn-implicit-preferences: backlog
+  1-6-memory-management-interface: backlog
+  1-7-user-recognition: backlog
+  1-8-guest-mode: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: J.A.R.V.I.S. Personality
+  # Goal: Develop signature personality - formal "Sir", dry wit, trusted peer dynamic
+  # FRs: FR9-FR13
+  epic-2: backlog
+  2-1-personality-configuration-system: backlog
+  2-2-system-prompt-builder: backlog
+  2-3-context-aware-tone-adaptation: backlog
+  2-4-proactive-observations: backlog
+  2-5-opinion-expression: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Event Awareness & Proactivity
+  # Goal: Proactive announcements for important events with intelligent filtering
+  # FRs: FR14-FR18
+  epic-3: backlog
+  3-1-internal-event-bus: backlog
+  3-2-home-automation-event-bridge: backlog
+  3-3-event-priority-rules: backlog
+  3-4-event-announcement-system: backlog
+  3-5-event-timing-intelligence: backlog
+  3-6-event-correlation: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Configuration & Administration
+  # Goal: Configure all aspects via unified web interface with proper access control
+  # FRs: FR61-FR68
+  epic-4: backlog
+  4-1-unified-settings-management: backlog
+  4-2-enhanced-web-configuration-ui: backlog
+  4-3-user-profile-system: backlog
+  4-4-access-control-permissions: backlog
+  4-5-settings-import-export: backlog
+  epic-4-retrospective: optional
+
+  # ============================================================
+  # PHASE 2 - Epics 5-6
+  # ============================================================
+
+  # Epic 5: Scheduled Intelligence
+  # Goal: Time-aware operations - morning briefings, evening summaries, pattern detection
+  # FRs: FR19-FR22
+  epic-5: backlog
+  5-1-apscheduler-integration: backlog
+  5-2-morning-briefing: backlog
+  5-3-evening-transition: backlog
+  5-4-recurring-scheduled-tasks: backlog
+  5-5-schedule-triggered-conversations: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: Extended Skills
+  # Goal: New capabilities - web research, calendar integration, note-taking
+  # FRs: FR52-FR54
+  epic-6: backlog
+  6-1-web-research-skill: backlog
+  6-2-calendar-integration-enhancement: backlog
+  6-3-note-taking-skill: backlog
+  epic-6-retrospective: optional
+
+  # ============================================================
+  # PHASE 3 - Epics 7-8
+  # ============================================================
+
+  # Epic 7: Orchestration & Autonomy
+  # Goal: Handle complex multi-step tasks autonomously with minimal intervention
+  # FRs: FR35-FR41
+  epic-7: backlog
+  7-1-multi-step-task-planner: backlog
+  7-2-autonomous-execution-engine: backlog
+  7-3-plan-persistence-recovery: backlog
+  7-4-confidence-based-autonomy: backlog
+  7-5-parallel-skill-coordination: backlog
+  epic-7-retrospective: optional
+
+  # Epic 8: Distributed Presence
+  # Goal: Multi-device presence with seamless handoff and synchronized state
+  # FRs: FR55-FR60
+  epic-8: backlog
+  8-1-client-server-architecture: backlog
+  8-2-room-aware-presence: backlog
+  8-3-conversation-handoff: backlog
+  8-4-state-synchronization: backlog
+  8-5-satellite-device-support: backlog
+  epic-8-retrospective: optional
